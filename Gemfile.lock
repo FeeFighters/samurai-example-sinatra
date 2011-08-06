@@ -1,5 +1,7 @@
-PATH
-  remote: /Users/krall/Programming/samurai-client-ruby
+GIT
+  remote: git@github.com:FeeFighters/samurai-client-ruby.git
+  revision: e0f883e9019bbb8668590f019e497686ccb73aa6
+  ref: default_views
   specs:
     samurai (0.2.3)
       activeresource (>= 2.2.2)

@@ -1,7 +1,5 @@
 require 'rubygems'; require 'bundler'; Bundler.require; require 'erb'; require 'open-uri'
 
-Samurai.options = YAML.load_file('samurai.yml').symbolize_keys
-
 Samurai.options = YAML.load(open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/samurai.yml').read).symbolize_keys
 layout { open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb').read }
 

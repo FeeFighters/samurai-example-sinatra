@@ -5,7 +5,7 @@ layout { open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/vi
 
 get '/' do
   payment_method = OpenStruct.new :first_name=>'Joe', :last_name=>'FeeFighter', :card_number=>'4111111111111111', :cvv=>'123'
-  erb Samurai::PaymentMethod.form_html, :locals=>{ :redirect_url=>url('/new-transaction'), :sandbox => true, :payment_method=>payment_method }
+  erb Samurai::PaymentMethod.form_html, :locals=>{ :redirect_url=>url('/new-transaction'), sandbox=>true, :payment_method=>payment_method }
 end
 
 get '/new-transaction' do

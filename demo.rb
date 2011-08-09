@@ -6,7 +6,8 @@ Samurai.options = YAML.load(open('https://raw.github.com/FeeFighters/samurai-sin
 layout { open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb').read }
 
 get '/' do
-  erb Samurai::PaymentMethod.form_html, :locals=>{ :redirect_url=>url('/new-transaction'), :sandbox => true }
+  payment_method = OpenStruct.new :first_name=>'Joe', :last_name=>'FeeFighter', :card_number=>'4111111111111111', :cvv=>'123'
+  erb Samurai::PaymentMethod.form_html, :locals=>{ :redirect_url=>url('/new-transaction'), :sandbox => true, :payment_method=>payment_method }
 end
 
 get '/new-transaction' do
@@ -14,6 +15,7 @@ get '/new-transaction' do
     :payment_method => Samurai::PaymentMethod.find(params[:payment_method_token]),
     :processor_token => Samurai::Processor.the_processor.id,
     :post_url => '/create-transaction',
+    :transaction => OpenStruct.new(:currency_code=>'US'),
   }
 end
 

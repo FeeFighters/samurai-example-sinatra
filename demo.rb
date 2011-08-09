@@ -1,14 +1,9 @@
-require 'rubygems'
-require 'bundler'
-Bundler.require
-require 'erb'
-require 'open-uri'
+require 'rubygems'; require 'bundler'; Bundler.require; require 'erb'; require 'open-uri'
 
 Samurai.options = YAML.load_file('samurai.yml').symbolize_keys
 
-layout do
-  open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb').read
-end
+Samurai.options = YAML.load(open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/samurai.yml').read).symbolize_keys
+layout { open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb').read }
 
 get '/' do
   erb Samurai::PaymentMethod.form_html, :locals=>{ :redirect_url=>url('/new-transaction'), :sandbox => true }

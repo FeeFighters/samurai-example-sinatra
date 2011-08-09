@@ -7,7 +7,7 @@ require 'open-uri'
 Samurai.options = YAML.load_file('samurai.yml').symbolize_keys
 
 layout do
-  open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb?login=jkrall&token=3c7e2af357ef88e1fcea2418916d9444').read
+  open('https://raw.github.com/FeeFighters/samurai-sinatra-demo/master/views/layout.erb').read
 end
 
 get '/' do

@@ -2,12 +2,17 @@
 <html>
   <head>
     <link href="http://feefighters.github.com/samurai-sinatra-demo/css/application.css" media="screen" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://samurai-app.feefighters.com/samurai/assets/api/samurai.js"></script>
+    <script type="text/javascript">Samurai.init()</script>
   </head>
   <body>
     <div class="wrapper">
       <h1>Samurai Demo</h1>
       <hr>
       <article class="span-7">
+        <h3>Shopping Cart</h3>
+        <p>(1) Katana Sword: $111.11</p>
+        <hr>
         <%= yield %>
       </article>
       <article class="span-5 last">

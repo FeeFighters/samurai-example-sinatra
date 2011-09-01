@@ -10,19 +10,19 @@
       <h1>Samurai Demo</h1>
       <hr>
       <article class="span-7">
-        <h3>Shopping Cart</h3>
-        <p>(1) Katana Sword: $111.11</p>
-        <hr>
         <%= yield %>
         <hr>
       </article>
       <article class="span-5 last">
         <% if request.path == '/' %>
+          <h3>Shopping Cart</h3>
+          <p>(1) Katana Sword: $111.11</p>
+          <hr>
           <h3>Accepted Card Types:</h3>
           <table class='flushleft'>
             <tr><th>Valid:</strong></th><td><code style="border:none;">4111111111111111</code></td></tr>
             <tr><th>Denied:</strong></th><td><code style="border:none;">4242424242424242</code></td></tr>
-            <tr><td colspan='2'><em>Any other card number will throw an exception.</em></td></tr>
+            <tr><td colspan='2'><em>All other card numbers will return an error.</em></td></tr>
           </table>
         <% else %>
         <p class='callout highlight-block span-3'>

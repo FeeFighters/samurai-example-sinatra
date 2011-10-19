@@ -1,6 +1,6 @@
 export RUBYOPT="rubygems"
 export RUBYLIB="."
-rvm ruby-1.9.2-p180@samurai-sinatra-demo
+rvm ruby-1.9.2@samurai-sinatra-demo
 
 # Install bundler if it doesn't already exist
 # if ! command -v bundle > /dev/null ; then

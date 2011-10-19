@@ -1,13 +1,14 @@
 %html
   %head
-    %link{:href=>"http://feefighters.github.com/samurai-sinatra-demo/css/application.css", :media=>"screen", :rel=>"stylesheet", :type=>"text/css"}
-    %script{:src=>"https://samurai.feefighters.com/samurai/assets/api/samurai.js"}
-    %script Samurai.init({debug: true, debugEasyXDM: true, merchant_key: '#{Samurai.options[:merchant_key]}'})
+    %link{:href=>"/application.css", :media=>"screen", :rel=>"stylesheet", :type=>"text/css"}
+    %script{:src=>"/samurai.js"}
+    :javascript
+      Samurai.init({debug: true, debugEasyXDM: true, merchant_key: '#{Samurai.options[:merchant_key]}'})
   %body
     .wrapper
       %h1 Samurai Demo
       %hr
-      %article.span-5.samurai-placeholder{:data=>{'samurai-payment_form'=>true}, :style=>'min-height:393px'}
+      %article.span-5.samurai-placeholder{:data=>{'samurai-payment-form'=>''}, :style=>'min-height:393px'}
       %article.span-5.last
         %h3 Shopping Cart
         %p (1) Katana Sword: $111.11
@@ -26,3 +27,15 @@
             %td{:colspan=>'2'}
               %em All other card numbers will return an error.
       %hr
+    :javascript
+      Samurai.ready(function(){
+        var $ = jQuery;
+        $('form').bind('samurai.payment', function(event, data) {  // Attach an event handler to process the transaction
+          if(!data.payment_method.is_sensitive_data_valid) return; // Let Samurai handle user input validation and errors
+          $.post('/sinatra-demo/create-transaction', data.payment_method, function(data) {   // Send the payment_method via AJAX to the server
+            var transaction = $.parseJSON(data).transaction;
+            if(transaction.success) { $('form').children('.results').html('Your purchase is complete!'+transaction.payment_method.payment_method.first_name+' '+transaction.payment_method.payment_method.last_name+': $'+transaction.amount+' - '+transaction.descriptor+'').end().trigger('samurai.completed');   // Update the page to display the results
+            } else { Samurai.PaymentErrorHandler.for($('form').get(0)).handleErrorsFromResponse(transaction); }
+          });
+        });
+      });

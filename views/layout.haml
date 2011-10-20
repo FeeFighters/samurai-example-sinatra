@@ -1,14 +1,14 @@
 %html
   %head
-    %link{:href=>"/application.css", :media=>"screen", :rel=>"stylesheet", :type=>"text/css"}
-    %script{:src=>"/samurai.js"}
+    %link{:href=>'/application.css', :media=>'screen', :rel=>'stylesheet', :type=>'text/css'}
+    %script{:src=>'https://samurai.feefighters.com/assets/api/samurai.js'}
     :javascript
-      Samurai.init({debug: true, debugEasyXDM: true, merchant_key: '#{Samurai.options[:merchant_key]}'})
+      Samurai.init({debug: true, debugEasyXDM: true, sandbox: true, merchant_key: '#{Samurai.options[:merchant_key]}'})
   %body
     .wrapper
       %h1 Samurai Demo
       %hr
-      %article.span-5.samurai-placeholder{:data=>{'samurai-payment-form'=>''}, :style=>'min-height:393px'}
+      %article.span-5.samurai-standard.samurai-placeholders{:'data-samurai-payment-form' => ''}
       %article.span-5.last
         %h3 Shopping Cart
         %p (1) Katana Sword: $111.11
@@ -18,23 +18,23 @@
           %tr
             %th Valid:
             %td
-              %code{:style=>"border:none;"} 4111111111111111
+              %code{:style=>'border:none;'} 4111111111111111
           %tr
             %th Denied:
             %td
-              %code{:style=>"border:none;"} 4242424242424242
+              %code{:style=>'border:none;'} 4242424242424242
           %tr
-            %td{:colspan=>'2'}
+            %td{:colspan=>2}
               %em All other card numbers will return an error.
       %hr
     :javascript
       Samurai.ready(function(){
         var $ = jQuery;
         $('form').bind('samurai.payment', function(event, data) {  // Attach an event handler to process the transaction
-          if(!data.payment_method.is_sensitive_data_valid) return; // Let Samurai handle user input validation and errors
-          $.post('/sinatra-demo/create-transaction', data.payment_method, function(data) {   // Send the payment_method via AJAX to the server
+          $.post('/create-transaction', data.payment_method, function(data) {   // Send the payment_method via AJAX to the server
             var transaction = $.parseJSON(data).transaction;
-            if(transaction.success) { $('form').children('.results').html('Your purchase is complete!'+transaction.payment_method.payment_method.first_name+' '+transaction.payment_method.payment_method.last_name+': $'+transaction.amount+' - '+transaction.descriptor+'').end().trigger('samurai.completed');   // Update the page to display the results
+            if(transaction.success) {
+              $('form').children('.results').html('<h3>Your purchase is complete!</h3><h4>'+transaction.payment_method.payment_method.first_name+' '+transaction.payment_method.payment_method.last_name+': $'+transaction.amount+' - '+transaction.descriptor+'</h4>').end().trigger('samurai.completed');   // Update the page to display the results
             } else { Samurai.PaymentErrorHandler.for($('form').get(0)).handleErrorsFromResponse(transaction); }
           });
         });

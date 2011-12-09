@@ -1,5 +1,5 @@
 source :rubygems
 
 gem 'sinatra'
-gem 'haml'
-gem 'samurai', '~> 0.2.12'
+gem 'sinatra-content-for'
+gem 'samurai', '~> 0.2.29'

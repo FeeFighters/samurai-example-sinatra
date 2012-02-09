@@ -30,7 +30,7 @@
   <section class="payment-info">
     <h2>Enter your payment information:</h2>
     <%= erb Samurai::Rails::Views.errors_html %>
-    <%= erb Samurai::Rails::Views.payment_form_html, :locals => { :redirect_url => url('/transparent_redirect/purchase'), :sandbox => true } %>
+    <%= erb Samurai::Rails::Views.payment_form_html, :locals => { :redirect_url => url('/transparent_redirect/purchase') } %>
   </section>
 
   <footer>
